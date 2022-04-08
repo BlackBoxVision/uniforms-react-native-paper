@@ -1,6 +1,6 @@
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import React, { ReactNode, createElement } from 'react';
+import { View } from 'react-native';
+import { HelperText } from 'react-native-paper';
 
 export default function wrapField(
   {
@@ -31,9 +31,13 @@ export default function wrapField(
   };
 
   return createElement(
-    FormControl,
+    View,
     props,
     ...children,
-    !!formHelperText && <FormHelperText>{formHelperText}</FormHelperText>,
+    !!formHelperText && (
+      <HelperText type={showInlineError && error ? 'error' : 'info'}>
+        {formHelperText}
+      </HelperText>
+    )
   );
 }
