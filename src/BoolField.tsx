@@ -62,7 +62,7 @@ function Bool(props: BoolFieldProps) {
           <SelectionControl
             checked={!!value}
             name={name}
-            onChange={event =>
+            onChange={(event) =>
               !disabled &&
               !readOnly &&
               onChange &&
@@ -75,7 +75,7 @@ function Bool(props: BoolFieldProps) {
         }
         label={transform ? transform(label as string) : label}
       />
-    </FormGroup>,
+    </FormGroup>
   );
 }
 

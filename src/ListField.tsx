@@ -45,8 +45,8 @@ function List({
                   name: child.props.name?.replace('$', '' + itemIndex),
                   ...itemProps,
                 })
-              : child,
-          ),
+              : child
+          )
         )}
       </ListMaterial>
       <ListAddField icon={addIcon} initialCount={initialCount} name="$" />

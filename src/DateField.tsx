@@ -52,7 +52,7 @@ function Date({
       inputProps={{ readOnly, ...(themeProps?.inputProps ?? {}) }}
       margin={themeProps?.margin ?? 'dense'}
       name={name}
-      onChange={event =>
+      onChange={(event) =>
         // FIXME: `valueAsNumber` is not available in `EventTarget`.
         disabled || dateParse((event.target as any).valueAsNumber, onChange)
       }

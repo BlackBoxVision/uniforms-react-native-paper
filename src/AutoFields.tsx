@@ -1,5 +1,5 @@
 import { ComponentType, createElement } from 'react';
-import { View } from "react-native";
+import { View } from 'react-native';
 import { useForm } from 'uniforms';
 
 import AutoField from './AutoField';
@@ -26,15 +26,15 @@ export default function AutoFields({
     element,
     props,
     (fields ?? schema.getSubfields())
-      .filter(field => !omitFields.includes(field))
-      .map(field =>
+      .filter((field) => !omitFields.includes(field))
+      .map((field) =>
         createElement(
           autoField,
           Object.assign(
             { key: field, name: field },
-            showInlineError === undefined ? null : { showInlineError },
-          ),
-        ),
-      ),
+            showInlineError === undefined ? null : { showInlineError }
+          )
+        )
+      )
   );
 }

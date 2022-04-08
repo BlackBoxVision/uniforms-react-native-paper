@@ -27,7 +27,7 @@ function ListDel({
   const parent = useField<{ minCount?: number }, unknown[]>(
     parentName,
     {},
-    { absoluteName: true },
+    { absoluteName: true }
   )[0];
 
   const limitNotReached =

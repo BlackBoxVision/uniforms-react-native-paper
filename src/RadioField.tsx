@@ -62,7 +62,7 @@ function Radio({
       row={row}
       value={value ?? ''}
     >
-      {allowedValues?.map(item => (
+      {allowedValues?.map((item) => (
         <FormControlLabel
           control={
             <RadioMaterial
@@ -74,7 +74,7 @@ function Radio({
           value={`${item}`}
         />
       ))}
-    </RadioGroup>,
+    </RadioGroup>
   );
 }
 
