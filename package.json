@@ -34,7 +34,15 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "form",
+    "forms",
+    "react-native-paper",
+    "meteor",
+    "react",
+    "react-component",
+    "schema",
+    "validation"
   ],
   "repository": "https://github.com/BlackBoxVision/uniforms-react-native-paper",
   "author": "JonatanSalas <jonatan.salas@blackbox-vision.tech> (https://github.com/BlackBoxVision)",
@@ -64,12 +72,14 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-builder-bob": "^0.18.0",
+    "react-native-paper": "^4.12.0",
     "release-it": "^14.2.2",
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-paper": "^3.0.0 || ^4.0.0"
   },
   "jest": {
     "preset": "react-native",
@@ -143,5 +153,10 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "invariant": "^2.2.4",
+    "lodash": "^4.17.21",
+    "uniforms": "^3.8.1"
   }
 }
