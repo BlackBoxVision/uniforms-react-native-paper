@@ -1,31 +1,13 @@
-import * as React from 'react';
+import React from 'react';
+import { AutoForm } from '@blackbox-vision/uniforms-react-native-paper';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from '@blackbox-vision/uniforms-react-native-paper';
+import { bridge as schema } from './schema/signup';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <AutoForm
+      schema={schema}
+      onSubmit={(model: any) => alert(JSON.stringify(model, null, 2))}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
