@@ -1,0 +1,22 @@
+{
+  "name": "@blackbox-vision/uniforms-react-native-paper-example",
+  "displayName": "UniformsReactNativePaper Example",
+  "expo": {
+    "name": "@blackbox-vision/uniforms-react-native-paper-example",
+    "slug": "blackbox-vision-uniforms-react-native-paper-example",
+    "description": "Example app for @blackbox-vision/uniforms-react-native-paper",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
