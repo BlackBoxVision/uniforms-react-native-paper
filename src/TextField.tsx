@@ -1,11 +1,12 @@
-import { useTheme } from '@material-ui/core';
-import TextField, {
-  TextFieldProps as MUITextFieldProps,
-} from '@material-ui/core/TextField';
 import React from 'react';
-import { FieldProps, connectField, filterDOMProps } from 'uniforms';
+import { View } from 'react-native';
+import { FieldProps, connectField } from 'uniforms';
+import { TextInput, HelperText } from 'react-native-paper';
 
-export type TextFieldProps = FieldProps<string, MUITextFieldProps>;
+export type TextFieldProps = FieldProps<
+  string,
+  React.ComponentProps<typeof TextInput>
+>;
 
 function Text({
   disabled,
@@ -23,26 +24,27 @@ function Text({
   value = '',
   ...props
 }: TextFieldProps) {
-  const theme = useTheme();
-  const themeProps = theme.props?.MuiTextField;
+  let formHelperText = (error && showInlineError && errorMessage) || helperText;
 
   return (
-    <TextField
-      disabled={disabled}
-      error={!!error}
-      fullWidth={themeProps?.fullWidth ?? true}
-      helperText={(error && showInlineError && errorMessage) || helperText}
-      inputProps={{ readOnly, ...(themeProps?.inputProps ?? {}) }}
-      label={label}
-      margin={themeProps?.margin ?? 'dense'}
-      name={name}
-      onChange={(event) => disabled || onChange(event.target.value)}
-      placeholder={placeholder}
-      ref={inputRef}
-      type={type}
-      value={value}
-      {...filterDOMProps(props)}
-    />
+    <View>
+      <TextInput
+        disabled={disabled || readOnly}
+        error={!!error}
+        label={label}
+        dense={true}
+        onChangeText={(text: string) => disabled || onChange(text)}
+        placeholder={placeholder}
+        ref={inputRef}
+        value={value}
+        {...props}
+      />
+      {!!formHelperText && (
+        <HelperText type={showInlineError && error ? 'error' : 'info'}>
+          {formHelperText}
+        </HelperText>
+      )}
+    </View>
   );
 }
 
