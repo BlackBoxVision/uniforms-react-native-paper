@@ -1,4 +1,5 @@
 import { ComponentType, createElement } from 'react';
+import { View } from "react-native";
 import { useForm } from 'uniforms';
 
 import AutoField from './AutoField';
@@ -13,7 +14,7 @@ export type AutoFieldsProps = {
 
 export default function AutoFields({
   autoField = AutoField,
-  element = 'div',
+  element = View,
   fields,
   omitFields = [],
   showInlineError,
