@@ -5,7 +5,11 @@ import { TextInput, HelperText } from 'react-native-paper';
 
 export type TextFieldProps = FieldProps<
   string,
-  React.ComponentProps<typeof TextInput>
+  React.ComponentProps<typeof TextInput>,
+  {
+    helperText?: string;
+    inputRef?: any;
+  }
 >;
 
 function Text({
@@ -20,29 +24,34 @@ function Text({
   placeholder,
   readOnly,
   showInlineError,
-  type = 'text',
   value = '',
   ...props
 }: TextFieldProps) {
   let formHelperText = (error && showInlineError && errorMessage) || helperText;
 
+  let helperProps: any = {
+    type: showInlineError && error ? 'error' : 'info',
+  };
+
   return (
-    <View>
+    <View
+      style={{
+        marginBottom: 8,
+      }}
+    >
       <TextInput
         disabled={disabled || readOnly}
         error={!!error}
-        label={label}
+        label={label as any}
         dense={true}
         onChangeText={(text: string) => disabled || onChange(text)}
         placeholder={placeholder}
         ref={inputRef}
         value={value}
-        {...props}
+        {...(props as any)}
       />
       {!!formHelperText && (
-        <HelperText type={showInlineError && error ? 'error' : 'info'}>
-          {formHelperText}
-        </HelperText>
+        <HelperText {...helperProps}>{formHelperText}</HelperText>
       )}
     </View>
   );

@@ -26,6 +26,36 @@ const schema = {
       uniforms: { type: 'password' },
     },
     acceptTermsOfUse: { type: 'boolean', const: true },
+    fulflname: { type: 'string' },
+    let: { type: 'string' },
+    cconfirmEmail: { type: 'string', const: { $data: '1/email' } },
+    p: {
+      type: 'string',
+      uniforms: { type: 'password' },
+    },
+    ps: {
+      type: 'string',
+      const: { $data: '1/password' },
+      uniforms: { type: 'password' },
+    },
+    ap: { type: 'boolean', const: true },
+    dsd: { type: 'string', const: { $data: '1/email' } },
+    dsds: {
+      type: 'string',
+      uniforms: { type: 'password' },
+    },
+    psdsds: {
+      type: 'string',
+      const: { $data: '1/password' },
+      uniforms: { type: 'password' },
+    },
+    dsdsds: { type: 'boolean', const: true },
+    dsdsdsdsdsd: {
+      type: 'string',
+      const: { $data: '1/password' },
+      uniforms: { type: 'password' },
+    },
+    dsdsdsdsdsdds: { type: 'boolean', const: true },
   },
   required: [
     'fullname',

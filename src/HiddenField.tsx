@@ -1,15 +1,7 @@
-import React, { HTMLProps, Ref, useEffect } from 'react';
-import { Override, filterDOMProps, useField } from 'uniforms';
+import React, { useEffect } from 'react';
+import { Override, useField } from 'uniforms';
 
-export type HiddenFieldProps = Override<
-  HTMLProps<HTMLInputElement>,
-  {
-    inputRef?: Ref<HTMLInputElement>;
-    name: string;
-    noDOM?: boolean;
-    value?: any;
-  }
->;
+export type HiddenFieldProps = Override<any, any>;
 
 export default function HiddenField({ value, ...rawProps }: HiddenFieldProps) {
   const props = useField(rawProps.name, rawProps, { initialValue: false })[0];
@@ -20,15 +12,5 @@ export default function HiddenField({ value, ...rawProps }: HiddenFieldProps) {
     }
   });
 
-  return props.noDOM ? null : (
-    <input
-      disabled={props.disabled}
-      name={props.name}
-      readOnly={props.readOnly}
-      ref={props.inputRef}
-      type="hidden"
-      value={value ?? props.value ?? ''}
-      {...filterDOMProps(props)}
-    />
-  );
+  return props.noDOM ? null : null;
 }

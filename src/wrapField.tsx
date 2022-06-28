@@ -1,6 +1,6 @@
-import React, { ReactNode, createElement } from 'react';
 import { View } from 'react-native';
 import { HelperText } from 'react-native-paper';
+import React, { ReactNode, createElement } from 'react';
 
 export default function wrapField(
   {
@@ -18,8 +18,8 @@ export default function wrapField(
   }: any,
   ...children: ReactNode[]
 ) {
-  const formHelperText = showInlineError && error ? errorMessage : helperText;
-  const props = {
+  let formHelperText = showInlineError && error ? errorMessage : helperText;
+  let props = {
     component,
     disabled: !!disabled,
     error: !!error,
@@ -28,16 +28,22 @@ export default function wrapField(
     readOnly,
     required,
     variant,
+    style: {
+      marginBottom: 8,
+    },
+  };
+
+  let helperProps: any = {
+    visible: !!formHelperText,
+    type: showInlineError && error ? 'error' : 'info',
   };
 
   return createElement(
     View,
-    props,
+    props as any,
     ...children,
     !!formHelperText && (
-      <HelperText type={showInlineError && error ? 'error' : 'info'}>
-        {formHelperText}
-      </HelperText>
+      <HelperText {...helperProps}>{formHelperText}</HelperText>
     )
   );
 }
