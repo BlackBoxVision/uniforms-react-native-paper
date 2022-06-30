@@ -102,9 +102,7 @@
     },
     "npm": {
       "publish": true,
-      "publishConfig": {
-        "access": "public"
-      }
+      "access": "public"
     },
     "github": {
       "release": true
