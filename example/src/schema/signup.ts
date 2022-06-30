@@ -4,58 +4,56 @@ import { JSONSchemaBridge } from 'uniforms-bridge-json-schema';
 const ajv = new Ajv({
   allErrors: true,
   useDefaults: true,
-  $data: true
+  $data: true,
 });
 
 ajv.addKeyword('uniforms');
+ajv.addKeyword('allowedValues');
+ajv.addKeyword('checkboxes');
 
 const schema = {
   title: 'Guest',
   type: 'object',
   properties: {
-    fullname: { type: 'string' },
-    email: { type: 'string' },
-    confirmEmail: { type: 'string', const: { $data: '1/email' } },
+    fullname: {
+      type: 'string',
+    },
+    email: {
+      type: 'string',
+    },
+    confirmEmail: {
+      type: 'string',
+      const: {
+        $data: '1/email',
+      },
+    },
     password: {
       type: 'string',
-      uniforms: { type: 'password' },
+      uniforms: {
+        type: 'password',
+      },
     },
     confirmPassword: {
       type: 'string',
-      const: { $data: '1/password' },
-      uniforms: { type: 'password' },
+      const: {
+        $data: '1/password',
+      },
+      uniforms: {
+        type: 'password',
+      },
     },
-    acceptTermsOfUse: { type: 'boolean', const: true },
-    fulflname: { type: 'string' },
-    let: { type: 'string' },
-    cconfirmEmail: { type: 'string', const: { $data: '1/email' } },
-    p: {
+    acceptTermsOfUse: {
+      type: 'boolean',
+      const: true,
+    },
+    age: {
+      type: 'number',
+    },
+    number: {
       type: 'string',
-      uniforms: { type: 'password' },
+      checkboxes: true,
+      allowedValues: ['1', '2', '3', '4'],
     },
-    ps: {
-      type: 'string',
-      const: { $data: '1/password' },
-      uniforms: { type: 'password' },
-    },
-    ap: { type: 'boolean', const: true },
-    dsd: { type: 'string', const: { $data: '1/email' } },
-    dsds: {
-      type: 'string',
-      uniforms: { type: 'password' },
-    },
-    psdsds: {
-      type: 'string',
-      const: { $data: '1/password' },
-      uniforms: { type: 'password' },
-    },
-    dsdsds: { type: 'boolean', const: true },
-    dsdsdsdsdsd: {
-      type: 'string',
-      const: { $data: '1/password' },
-      uniforms: { type: 'password' },
-    },
-    dsdsdsdsdsdds: { type: 'boolean', const: true },
   },
   required: [
     'fullname',

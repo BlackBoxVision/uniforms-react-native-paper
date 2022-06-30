@@ -159,6 +159,8 @@
   "dependencies": {
     "invariant": "^2.2.4",
     "lodash": "^4.17.21",
+    "react-native-modal-datetime-picker": "^13.1.2",
+    "react-native-paper-dropdown": "^1.0.7",
     "uniforms": "^3.8.1"
   }
 }

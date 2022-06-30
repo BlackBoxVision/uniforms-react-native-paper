@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import omit from 'lodash/omit';
 import setWith from 'lodash/setWith';
 import React, { Component, SyntheticEvent } from 'react';
-import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import {
   ChangedMap,
   Context,
@@ -14,7 +14,6 @@ import {
   changedKeys,
   Bridge,
 } from 'uniforms';
-import AutoField from './AutoField';
 
 export type BaseFormProps<Model> = {
   autosave: boolean;
@@ -291,20 +290,7 @@ export class BaseForm<
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <FlatList
-            {...formProps}
-            data={React.Children.map(
-              children,
-              (child: any) => child.props.name
-            )}
-            keyExtractor={(item, index) => `${item}-${index}`}
-            renderItem={({ item: field }: any) => (
-              <AutoField key={field} name={field} />
-            )}
-            contentContainerStyle={{
-              margin: 16,
-            }}
-          />
+          <View {...this.getNativeFormProps()} />
         </KeyboardAvoidingView>
       </FormContext.Provider>
     );

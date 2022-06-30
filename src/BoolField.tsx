@@ -1,66 +1,64 @@
 import React from 'react';
-import omit from 'lodash/omit';
+import { View } from 'react-native';
 import { FieldProps, connectField } from 'uniforms';
-
-import wrapField from './wrapField';
+import { Checkbox, HelperText, Switch, Text } from 'react-native-paper';
 
 export type BoolFieldProps = FieldProps<boolean, any>;
 
-function Bool(props: BoolFieldProps) {
-  // const {
-  //   appearance,
-  //   disabled,
-  //   inputRef,
-  //   label,
-  //   legend,
-  //   name,
-  //   onChange,
-  //   readOnly,
-  //   transform,
-  //   value,
-  // } = props;
-  // const theme = useTheme();
-  // const formControlThemeProps = theme.props?.MuiFormControl;
-  // const SelectionControl =
-  //   appearance === 'checkbox' || appearance === undefined ? Checkbox : Switch;
+function Bool({
+  appearance,
+  disabled,
+  label,
+  onChange,
+  readOnly,
+  transform,
+  value,
+  error,
+  showInlineError,
+  helperText,
+  errorMessage,
+}: BoolFieldProps) {
+  let formHelperText = (error && showInlineError && errorMessage) || helperText;
 
-  // return wrapField(
-  //   {
-  //     ...(formControlThemeProps?.fullWidth === undefined && {
-  //       fullWidth: true,
-  //     }),
-  //     ...(formControlThemeProps?.margin === undefined && { margin: 'dense' }),
-  //     ...props,
-  //     component: 'fieldset',
-  //   },
-  //   legend && (
-  //     <FormLabel component="legend" htmlFor={name}>
-  //       {legend}
-  //     </FormLabel>
-  //   ),
-  //   <FormGroup>
-  //     <FormControlLabel
-  //       control={
-  //         <SelectionControl
-  //           checked={!!value}
-  //           name={name}
-  //           onChange={(event) =>
-  //             !disabled &&
-  //             !readOnly &&
-  //             onChange &&
-  //             onChange(event.target.checked)
-  //           }
-  //           ref={inputRef as Ref<HTMLButtonElement>}
-  //           value={name}
-  //           {...omit(filterDOMProps(props), ['helperText', 'fullWidth'])}
-  //         />
-  //       }
-  //       label={transform ? transform(label as string) : label}
-  //     />
-  //   </FormGroup>
-  // );
+  let helperProps: any = {
+    visible: !!formHelperText,
+    type: showInlineError && error ? 'error' : 'info',
+    children: formHelperText,
+  };
 
-  return null;
+  return (
+    <View style={{ flex: 1, marginBottom: 8 }}>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {appearance === 'checkbox' || appearance === undefined ? (
+          <Checkbox
+            disabled={disabled}
+            status={!!value ? 'checked' : 'unchecked'}
+            onPress={() => {
+              !disabled && !readOnly && onChange && onChange(!value);
+            }}
+          />
+        ) : (
+          <Switch
+            disabled={disabled}
+            value={!!value}
+            onValueChange={() => {
+              !disabled && !readOnly && onChange && onChange(!value);
+            }}
+          />
+        )}
+        <Text>{transform ? transform(label as string) : label}</Text>
+      </View>
+      {!!formHelperText && <HelperText {...helperProps} />}
+    </View>
+  );
 }
 
 export default connectField<BoolFieldProps>(Bool, {

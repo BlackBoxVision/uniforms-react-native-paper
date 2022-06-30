@@ -36,6 +36,7 @@ function Text({
   return (
     <View
       style={{
+        flex: 1,
         marginBottom: 8,
       }}
     >

@@ -1,53 +1,49 @@
 import React from 'react';
-import omit from 'lodash/omit';
+import { View } from 'react-native';
 import { FieldProps, connectField } from 'uniforms';
-
-import wrapField from './wrapField';
+import { RadioButton, Text } from 'react-native-paper';
 
 export type RadioFieldProps = FieldProps<any, any>;
 
-function Radio(props: RadioFieldProps) {
-  // const theme = useTheme();
-  // const formControlThemeProps = theme.props?.MuiFormControl;
-  // return wrapField(
-  //   {
-  //     fullWidth: formControlThemeProps?.fullWidth ?? true,
-  //     margin: formControlThemeProps?.margin ?? 'dense',
-  //     ...props,
-  //     component: 'fieldset',
-  //     disabled,
-  //   },
-  //   label && (
-  //     <FormLabel component="legend" htmlFor={name}>
-  //       {label}
-  //     </FormLabel>
-  //   ),
-  //   <RadioGroup
-  //     id={id}
-  //     name={name}
-  //     onChange={(event: any) =>
-  //       disabled || readOnly || onChange(event.target.value)
-  //     }
-  //     ref={inputRef}
-  //     row={row}
-  //     value={value ?? ''}
-  //   >
-  //     {allowedValues?.map((item) => (
-  //       <FormControlLabel
-  //         control={
-  //           <RadioMaterial
-  //             {...omit(filterDOMProps(props), ['checkboxes', 'helperText'])}
-  //           />
-  //         }
-  //         key={item}
-  //         label={transform ? transform(item) : item}
-  //         value={`${item}`}
-  //       />
-  //     ))}
-  //   </RadioGroup>
-  // );
-
-  return null;
+function Radio({
+  label,
+  value,
+  readOnly,
+  disabled,
+  transform,
+  allowedValues,
+  onChange,
+}: RadioFieldProps) {
+  return (
+    <View
+      style={{
+        flex: 1,
+        marginBottom: 8,
+      }}
+    >
+      <Text style={{ marginBottom: 8 }}>{label}</Text>
+      <RadioButton.Group
+        onValueChange={(value) => disabled || readOnly || onChange(value)}
+        value={value ?? ''}
+      >
+        {allowedValues?.map((item: any, idx: number) => (
+          <View
+            key={`${item}-${idx}`}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <RadioButton value={item} />
+            <Text>{transform ? transform(item) : item}</Text>
+          </View>
+        ))}
+      </RadioButton.Group>
+    </View>
+  );
 }
 
 export default connectField<RadioFieldProps>(Radio, {
