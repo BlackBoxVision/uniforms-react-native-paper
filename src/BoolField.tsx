@@ -17,6 +17,7 @@ function Bool({
   showInlineError,
   helperText,
   errorMessage,
+  ...props
 }: BoolFieldProps) {
   let formHelperText = (error && showInlineError && errorMessage) || helperText;
 
@@ -54,7 +55,11 @@ function Bool({
             }}
           />
         )}
-        <Text>{transform ? transform(label as string) : label}</Text>
+        <Text>
+          {`${transform ? transform(label as string) : (label as any)}${
+            (props as any).required ? ' *' : ''
+          }`}
+        </Text>
       </View>
       {!!formHelperText && <HelperText {...helperProps} />}
     </View>

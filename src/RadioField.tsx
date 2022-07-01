@@ -13,6 +13,7 @@ function Radio({
   transform,
   allowedValues,
   onChange,
+  ...props
 }: RadioFieldProps) {
   return (
     <View
@@ -21,7 +22,9 @@ function Radio({
         marginBottom: 8,
       }}
     >
-      <Text style={{ marginBottom: 8 }}>{label}</Text>
+      <Text style={{ marginBottom: 8 }}>{`${label as any}${
+        (props as any).required ? ' *' : ''
+      }`}</Text>
       <RadioButton.Group
         onValueChange={(value) => disabled || readOnly || onChange(value)}
         value={value ?? ''}

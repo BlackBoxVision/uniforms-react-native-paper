@@ -46,7 +46,7 @@ function Num({
         keyboardType="numeric"
         disabled={disabled || readOnly}
         error={!!error}
-        label={label as any}
+        label={`${label as any}${(props as any).required ? ' *' : ''}`}
         dense={true}
         onChangeText={(text: string) =>
           disabled || onChange(parseFloat(text) as any)

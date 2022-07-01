@@ -38,14 +38,14 @@ const LongText = ({
       <TextInput
         disabled={disabled || readOnly}
         error={!!error}
-        label={label as any}
+        label={`${label as any}${(props as any).required ? ' *' : ''}`}
         dense={true}
         multiline={true}
         onChangeText={(text: string) => disabled || onChange(text)}
         placeholder={placeholder}
         ref={inputRef}
         value={value}
-        {...props as any}
+        {...(props as any)}
       />
       {!!formHelperText && (
         <HelperText {...helperProps}>{formHelperText}</HelperText>
