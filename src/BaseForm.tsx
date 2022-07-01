@@ -2,8 +2,8 @@ import clone from 'lodash/clone';
 import get from 'lodash/get';
 import omit from 'lodash/omit';
 import setWith from 'lodash/setWith';
+import { View } from 'react-native';
 import React, { Component, SyntheticEvent } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import {
   ChangedMap,
   Context,
@@ -283,15 +283,9 @@ export class BaseForm<
   }
 
   render() {
-    let { children, ...formProps } = this.getNativeFormProps();
-
     return (
       <FormContext.Provider value={this.getContext()}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <View {...this.getNativeFormProps()} />
-        </KeyboardAvoidingView>
+        <View {...this.getNativeFormProps()} />
       </FormContext.Provider>
     );
   }
