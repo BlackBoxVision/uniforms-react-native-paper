@@ -1,11 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { FieldProps, connectField } from 'uniforms';
-import { RadioButton, Text } from 'react-native-paper';
+import { RadioButton, Text, useTheme } from 'react-native-paper';
 
 export type RadioFieldProps = FieldProps<any, any>;
 
 function Radio({
+  error,
   label,
   value,
   readOnly,
@@ -15,6 +16,8 @@ function Radio({
   onChange,
   ...props
 }: RadioFieldProps) {
+  let theme = useTheme();
+
   return (
     <View
       style={{
@@ -22,9 +25,14 @@ function Radio({
         marginBottom: 8,
       }}
     >
-      <Text style={{ marginBottom: 8 }}>{`${label as any}${
-        (props as any).required ? ' *' : ''
-      }`}</Text>
+      <Text
+        style={{
+          marginBottom: 8,
+          color: !!error ? theme.colors.error : theme.colors.text,
+        }}
+      >
+        {`${label as any}${(props as any).required ? ' *' : ''}`}
+      </Text>
       <RadioButton.Group
         onValueChange={(value) => disabled || readOnly || onChange(value)}
         value={value ?? ''}

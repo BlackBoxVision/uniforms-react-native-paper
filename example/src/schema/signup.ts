@@ -62,6 +62,7 @@ const schema = {
     'password',
     'confirmPassword',
     'acceptTermsOfUse',
+    'number',
   ],
 };
 

@@ -1,7 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import { FieldProps, connectField } from 'uniforms';
-import { Checkbox, HelperText, Switch, Text } from 'react-native-paper';
+import {
+  Checkbox,
+  HelperText,
+  Switch,
+  Text,
+  useTheme,
+} from 'react-native-paper';
 
 export type BoolFieldProps = FieldProps<boolean, any>;
 
@@ -19,6 +25,8 @@ function Bool({
   errorMessage,
   ...props
 }: BoolFieldProps) {
+  let theme = useTheme();
+
   let formHelperText = (error && showInlineError && errorMessage) || helperText;
 
   let helperProps: any = {
@@ -55,7 +63,11 @@ function Bool({
             }}
           />
         )}
-        <Text>
+        <Text
+          style={{
+            color: !!error ? theme.colors.error : theme.colors.text,
+          }}
+        >
           {`${transform ? transform(label as string) : (label as any)}${
             (props as any).required ? ' *' : ''
           }`}
