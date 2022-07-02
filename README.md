@@ -1,27 +1,11 @@
-# @blackbox-vision/uniforms-react-native-paper
+# uniforms-react-native-paper
 
-React Native Paper adapter for uniforms library
+> [React Native Paper](https://reactnativepaper.com) components for `uniforms`.
 
-## Installation
+## Install
 
 ```sh
-npm install @blackbox-vision/uniforms-react-native-paper
+$ npm install @blackbox-vision/uniforms-react-native-paper
 ```
 
-## Usage
-
-```js
-import { multiply } from "@blackbox-vision/uniforms-react-native-paper";
-
-// ...
-
-const result = await multiply(3, 7);
-```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
-
-## License
-
-MIT
+For more in depth documentation see [uniforms.tools](https://uniforms.tools).
