@@ -37,6 +37,7 @@ function Bool({
     >
       <FormControlLabel
         {...props}
+        error={!!error}
         control={
           appearance === 'checkbox' || appearance === undefined ? (
             <Checkbox

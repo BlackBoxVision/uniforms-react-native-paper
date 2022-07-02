@@ -17,55 +17,55 @@ const schema = {
   title: 'Guest',
   type: 'object',
   properties: {
-    fullname: {
-      type: 'string',
-    },
-    email: {
-      type: 'string',
-    },
-    confirmEmail: {
-      type: 'string',
-      const: {
-        $data: '1/email',
-      },
-    },
-    password: {
-      type: 'string',
-      uniforms: {
-        type: 'password',
-      },
-    },
-    confirmPassword: {
-      type: 'string',
-      const: {
-        $data: '1/password',
-      },
-      uniforms: {
-        type: 'password',
-      },
-    },
+    // fullname: {
+    //   type: 'string',
+    // },
+    // email: {
+    //   type: 'string',
+    // },
+    // confirmEmail: {
+    //   type: 'string',
+    //   const: {
+    //     $data: '1/email',
+    //   },
+    // },
+    // password: {
+    //   type: 'string',
+    //   uniforms: {
+    //     type: 'password',
+    //   },
+    // },
+    // confirmPassword: {
+    //   type: 'string',
+    //   const: {
+    //     $data: '1/password',
+    //   },
+    //   uniforms: {
+    //     type: 'password',
+    //   },
+    // },
     number: {
       type: 'string',
-      checkboxes: false,
-      multiple: false,
+      multiple: true,
+      checkboxes: true,
       fieldType: Array,
       allowedValues: ['1', '2', '3', '4', '7', '8', '9', '10'],
     },
-    acceptTermsOfUse: {
-      type: 'boolean',
-      const: true,
-    },
-    age: {
-      type: 'number',
-    },
+    // acceptTermsOfUse: {
+    //   type: 'boolean',
+    //   const: true,
+    // },
+    // age: {
+    //   type: 'number',
+    // },
   },
   required: [
-    'fullname',
-    'email',
-    'confirmEmail',
-    'password',
-    'confirmPassword',
-    'acceptTermsOfUse',
+    // 'fullname',
+    // 'email',
+    // 'confirmEmail',
+    // 'password',
+    // 'confirmPassword',
+    // 'acceptTermsOfUse',
     'number',
   ],
 };

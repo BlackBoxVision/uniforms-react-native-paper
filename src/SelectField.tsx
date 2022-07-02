@@ -46,20 +46,20 @@ function Select(props: SelectFieldProps) {
     error,
     value,
     required,
+    ...rest
   } = props;
 
   if (checkboxes) {
     let appearance = props.appearance ?? 'checkbox';
-    let isArray = fieldType !== Array;
 
     return (
       <FormControl
+        error={error}
         required={required}
         label={legend || label}
-        error={showInlineError && error}
         helperText={(error && showInlineError && errorMessage) || helperText}
       >
-        {!isArray ? (
+        {!multiple ? (
           <RadioButton.Group
             value={value ?? ''}
             onValueChange={(value) => {
@@ -76,47 +76,41 @@ function Select(props: SelectFieldProps) {
             ))}
           </RadioButton.Group>
         ) : (
-          allowedValues?.map?.((allowedValue: any, idx: number) => (
-            <FormControlLabel
-              {...props}
-              key={idx}
-              control={
-                appearance === 'checkbox' ? (
-                  <Checkbox
-                    status={
-                      !!value?.includes?.(allowedValue)
-                        ? 'checked'
-                        : 'unchecked'
-                    }
-                    disabled={disableItem?.(allowedValue) || disabled}
-                    onPress={() => {
-                      disabled ||
-                        readOnly ||
-                        onChange?.(
-                          !!multiple
-                            ? xor?.([allowedValue], value)
-                            : allowedValue
-                        );
-                    }}
-                  />
-                ) : (
-                  <Switch
-                    value={!!value?.includes?.(allowedValue)}
-                    disabled={disableItem?.(allowedValue) || disabled}
-                    onValueChange={() => {
-                      disabled ||
-                        readOnly ||
-                        onChange?.(
-                          !!multiple
-                            ? xor?.([allowedValue], value)
-                            : allowedValue
-                        );
-                    }}
-                  />
-                )
-              }
-            />
-          ))
+          allowedValues?.map?.((allowedValue: any, idx: number) => {
+            let hasValue = !!value?.split?.(',').includes?.(allowedValue);
+            let handleChange = () => {
+              disabled ||
+                readOnly ||
+                onChange?.(
+                  !!multiple
+                    ? xor?.(value?.split?.(','), [allowedValue]).join(',')
+                    : allowedValue
+                );
+            };
+
+            return (
+              <FormControlLabel
+                {...rest}
+                key={idx}
+                label={allowedValue}
+                control={
+                  appearance === 'checkbox' ? (
+                    <Checkbox
+                      status={!!hasValue ? 'checked' : 'unchecked'}
+                      disabled={disableItem?.(allowedValue) || disabled}
+                      onPress={handleChange}
+                    />
+                  ) : (
+                    <Switch
+                      value={hasValue}
+                      disabled={disableItem?.(allowedValue) || disabled}
+                      onValueChange={handleChange}
+                    />
+                  )
+                }
+              />
+            );
+          })
         )}
       </FormControl>
     );
