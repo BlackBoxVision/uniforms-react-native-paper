@@ -47,9 +47,9 @@ const schema = {
     number: {
       type: 'string',
       checkboxes: false,
-      multiple: true,
+      multiple: false,
       fieldType: Array,
-      allowedValues: ['1', '2', '3', '4', '1', '2', '3', '4'],
+      allowedValues: ['1', '2', '3', '4', '7', '8', '9', '10'],
     },
     acceptTermsOfUse: {
       type: 'boolean',

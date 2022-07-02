@@ -128,7 +128,6 @@ function Select(props: SelectFieldProps) {
       helperText={(error && showInlineError && errorMessage) || helperText}
     >
       <SelectDropdown
-        value={value ?? ''}
         label={legend || label}
         visible={isVisible}
         multiSelect={multiple}
@@ -137,12 +136,15 @@ function Select(props: SelectFieldProps) {
         }}
         onDismiss={() => setIsVisible(false)}
         showDropDown={() => setIsVisible(true)}
+        value={Array.isArray(value) ? value?.join?.(',') : value ?? ''}
         list={allowedValues?.map?.((allowedValue: any) => ({
           label: allowedValue,
           value: allowedValue,
         }))}
         setValue={(allowedValue: any) => {
-          disabled || readOnly || onChange?.(allowedValue);
+          disabled ||
+            readOnly ||
+            onChange?.(!!multiple ? allowedValue?.split?.(',') : allowedValue);
         }}
         dropDownItemStyle={{
           height: 40,
