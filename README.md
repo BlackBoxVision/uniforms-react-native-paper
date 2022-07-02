@@ -27,13 +27,13 @@ You can install this library via NPM or YARN.
 ### NPM
 
 ```sh
-$ npm install @blackbox-vision/uniforms-react-native-paper react-native-paper
+$ npm install @blackbox-vision/uniforms-react-native-paper react-native-paper react-native-paper-dropdown react-native-modal-datetime-picker @react-native-community/datetimepicker
 ```
 
 ### YARN
 
 ```sh
-$ yarn add @blackbox-vision/uniforms-react-native-paper react-native-paper
+$ yarn add @blackbox-vision/uniforms-react-native-paper react-native-paper react-native-paper-dropdown react-native-modal-datetime-picker @react-native-community/datetimepicker
 ```
 
 ## Example Usage

@@ -17,6 +17,11 @@ const schema = {
   title: 'Guest',
   type: 'object',
   properties: {
+    date: {
+      type: 'string',
+      fieldType: Date,
+    },
+
     // fullname: {
     //   type: 'string',
     // },
