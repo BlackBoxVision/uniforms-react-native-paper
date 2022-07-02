@@ -5,9 +5,8 @@ import NumField from './NumField';
 import BoolField from './BoolField';
 import DateField from './DateField';
 import TextField from './TextField';
-// import ListField from './ListField';
+import NestField from './NestField';
 import RadioField from './RadioField';
-// import SelectField from './SelectField';
 
 const AutoField = createAutoField((props) => {
   if (props.allowedValues) {
@@ -26,8 +25,8 @@ const AutoField = createAutoField((props) => {
       return DateField;
     case Number:
       return NumField;
-    // case Object:
-    //   return NestField;
+    case Object:
+      return NestField;
     case String:
       return TextField;
   }
