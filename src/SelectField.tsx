@@ -131,7 +131,7 @@ function Select(props: SelectFieldProps) {
     >
       <SelectDropdown
         value={value}
-        label={label}
+        label={legend || label}
         visible={isVisible}
         multiSelect={multiple}
         inputProps={{
