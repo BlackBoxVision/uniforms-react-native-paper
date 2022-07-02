@@ -1,194 +1,161 @@
-import React from 'react';
 import xor from 'lodash/xor';
-import omit from 'lodash/omit';
+import React, { useState } from 'react';
 import { FieldProps, connectField } from 'uniforms';
+import SelectDropdown from 'react-native-paper-dropdown';
+import { Checkbox, RadioButton, Switch } from 'react-native-paper';
 
-import wrapField from './wrapField';
+import FormControl from './FormControl';
+import FormControlLabel from './FormControlLabel';
 
-type CheckboxesProps = FieldProps<any, any>;
+// TODO: improve typings for component props
+type SelectProps = FieldProps<
+  any,
+  any,
+  {
+    label?: string;
+  }
+>;
 
-type SelectProps = FieldProps<any, any>;
+type CheckboxesProps = FieldProps<
+  any,
+  any,
+  {
+    label?: string;
+  }
+>;
 
 export type SelectFieldProps = CheckboxesProps | SelectProps;
 
-const base64: (string: string) => string =
-  typeof btoa === 'undefined'
-    ? /* istanbul ignore next */ (x) => Buffer.from(x).toString('base64')
-    : btoa;
-const escape = (x: string) => base64(encodeURIComponent(x)).replace(/=+$/, '');
-
-// eslint-disable-next-line complexity
 function Select(props: SelectFieldProps) {
-  // const theme = useTheme();
-  // const formControlThemeProps = theme.props?.MuiFormControl;
-  // const value = props.value ?? '';
+  let [isVisible, setIsVisible] = useState(false);
 
-  // if (props.checkboxes) {
-  //   const {
-  //     allowedValues,
-  //     disabled,
-  //     fieldType,
-  //     id,
-  //     inputRef,
-  //     label,
-  //     legend,
-  //     name,
-  //     onChange,
-  //     readOnly,
-  //     transform,
-  //   } = props;
+  let {
+    showInlineError,
+    allowedValues,
+    errorMessage,
+    disableItem,
+    helperText,
+    checkboxes,
+    fieldType,
+    disabled,
+    multiple = false,
+    readOnly,
+    onChange,
+    legend,
+    label,
+    error,
+    value,
+    required,
+  } = props;
 
-  //   const appearance = props.appearance ?? 'checkbox';
-  //   const SelectionControl = appearance === 'checkbox' ? Checkbox : Switch;
-  //   const filteredProps = omit(filterDOMProps(props), [
-  //     'checkboxes' as never,
-  //     'disableItem' as never,
-  //     'id',
-  //     'inputRef',
-  //   ]);
+  if (checkboxes) {
+    let appearance = props.appearance ?? 'checkbox';
+    let isArray = fieldType !== Array;
 
-  //   const children =
-  //     fieldType !== Array ? (
-  //       <RadioGroup
-  //         id={id}
-  //         name={name}
-  //         onChange={(event) =>
-  //           disabled || readOnly || onChange(event.target.value)
-  //         }
-  //         ref={inputRef}
-  //         value={value ?? ''}
-  //       >
-  //         {allowedValues!.map((item) => (
-  //           <FormControlLabel
-  //             control={
-  //               <Radio id={`${id}-${escape(item)}`} {...filteredProps} />
-  //             }
-  //             disabled={props.disableItem?.(item) || disabled}
-  //             key={item}
-  //             label={transform ? transform(item) : item}
-  //             value={item}
-  //           />
-  //         ))}
-  //       </RadioGroup>
-  //     ) : (
-  //       <FormGroup id={id}>
-  //         {allowedValues!.map((item) => (
-  //           <FormControlLabel
-  //             control={
-  //               <SelectionControl
-  //                 checked={value.includes(item)}
-  //                 id={`${id}-${escape(item)}`}
-  //                 name={name}
-  //                 onChange={() =>
-  //                   disabled || readOnly || onChange(xor([item], value))
-  //                 }
-  //                 ref={inputRef}
-  //                 value={name}
-  //                 {...filteredProps}
-  //               />
-  //             }
-  //             disabled={props.disableItem?.(item) || disabled}
-  //             key={item}
-  //             label={transform ? transform(item) : item}
-  //           />
-  //         ))}
-  //       </FormGroup>
-  //     );
+    return (
+      <FormControl
+        required={required}
+        label={legend || label}
+        error={showInlineError && error}
+        helperText={(error && showInlineError && errorMessage) || helperText}
+      >
+        {!isArray ? (
+          <RadioButton.Group
+            value={value ?? ''}
+            onValueChange={(value) => {
+              disabled || readOnly || onChange?.(value);
+            }}
+          >
+            {allowedValues?.map?.((allowedValue: any, idx: number) => (
+              <FormControlLabel
+                {...props}
+                key={idx}
+                label={allowedValue}
+                control={<RadioButton value={allowedValue} />}
+              />
+            ))}
+          </RadioButton.Group>
+        ) : (
+          allowedValues?.map?.((allowedValue: any, idx: number) => (
+            <FormControlLabel
+              {...props}
+              key={idx}
+              control={
+                appearance === 'checkbox' ? (
+                  <Checkbox
+                    status={
+                      !!value?.includes?.(allowedValue)
+                        ? 'checked'
+                        : 'unchecked'
+                    }
+                    disabled={disableItem?.(allowedValue) || disabled}
+                    onPress={() => {
+                      disabled ||
+                        readOnly ||
+                        onChange?.(
+                          !!multiple
+                            ? xor?.([allowedValue], value)
+                            : allowedValue
+                        );
+                    }}
+                  />
+                ) : (
+                  <Switch
+                    value={!!value?.includes?.(allowedValue)}
+                    disabled={disableItem?.(allowedValue) || disabled}
+                    onValueChange={() => {
+                      disabled ||
+                        readOnly ||
+                        onChange?.(
+                          !!multiple
+                            ? xor?.([allowedValue], value)
+                            : allowedValue
+                        );
+                    }}
+                  />
+                )
+              }
+            />
+          ))
+        )}
+      </FormControl>
+    );
+  }
 
-  //   return wrapField(
-  //     { ...formControlThemeProps, ...props, component: 'fieldset' },
-  //     (legend || label) && (
-  //       <FormLabel component="legend">{legend || label}</FormLabel>
-  //     ),
-  //     children
-  //   );
-  // }
-  // const textFieldThemeProps = theme.props?.MuiTextField;
-  // const {
-  //   allowedValues,
-  //   disabled,
-  //   error,
-  //   errorMessage,
-  //   fieldType,
-  //   fullWidth = textFieldThemeProps?.fullWidth ?? true,
-  //   helperText,
-  //   id,
-  //   InputLabelProps,
-  //   inputProps,
-  //   label,
-  //   labelProps,
-  //   margin = textFieldThemeProps?.margin ?? 'dense',
-  //   name,
-  //   native,
-  //   onChange,
-  //   placeholder,
-  //   readOnly,
-  //   required,
-  //   showInlineError,
-  //   transform,
-  //   variant,
-  //   textFieldProps,
-  // } = props;
+  console.info('value ', value);
 
-  // const Item = native ? 'option' : MenuItem;
-  // const hasPlaceholder = !!placeholder;
-  // const hasValue = value !== '' && value !== undefined;
-  // const filteredProps = omit(filterDOMProps(props), [
-  //   'checkboxes',
-  //   'disableItem',
-  //   'fullWidth',
-  //   'helperText',
-  //   'margin',
-  //   'textFieldProps',
-  //   'variant',
-  // ]);
-
-  // return (
-  //   <TextField
-  //     disabled={disabled}
-  //     error={!!error}
-  //     fullWidth={fullWidth}
-  //     helperText={(error && showInlineError && errorMessage) || helperText}
-  //     InputLabelProps={{
-  //       shrink: !!label && (hasPlaceholder || hasValue),
-  //       ...labelProps,
-  //       ...InputLabelProps,
-  //     }}
-  //     label={label}
-  //     margin={margin}
-  //     onChange={(event) =>
-  //       disabled ||
-  //       readOnly ||
-  //       onChange(event.target.value !== '' ? event.target.value : undefined)
-  //     }
-  //     required={required}
-  //     select
-  //     SelectProps={{
-  //       displayEmpty: hasPlaceholder,
-  //       inputProps: { name, id, ...inputProps },
-  //       multiple: fieldType === Array || undefined,
-  //       native,
-  //       ...filteredProps,
-  //     }}
-  //     value={native && !value ? '' : value}
-  //     variant={variant}
-  //     {...textFieldProps}
-  //   >
-  //     {(hasPlaceholder || !required || !hasValue) && (
-  //       <Item value="" disabled={!!required}>
-  //         {placeholder || label}
-  //       </Item>
-  //     )}
-
-  //     {allowedValues!.map((value) => (
-  //       <Item disabled={props.disableItem?.(value)} key={value} value={value}>
-  //         {transform ? transform(value) : value}
-  //       </Item>
-  //     ))}
-  //   </TextField>
-  // );
-
-  return null;
+  return (
+    <FormControl
+      error={showInlineError && error}
+      helperText={(error && showInlineError && errorMessage) || helperText}
+    >
+      <SelectDropdown
+        value={value}
+        label={label}
+        visible={isVisible}
+        multiSelect={multiple}
+        inputProps={{
+          dense: true,
+        }}
+        onDismiss={() => setIsVisible(false)}
+        showDropDown={() => setIsVisible(true)}
+        list={allowedValues?.map?.((allowedValue: any) => ({
+          label: allowedValue,
+          value: allowedValue,
+        }))}
+        setValue={(allowedValue: any) => {
+          disabled ||
+            readOnly ||
+            onChange?.(
+              !!multiple ? xor?.([allowedValue], value) : allowedValue
+            );
+        }}
+        dropDownItemStyle={{
+          height: 40,
+        }}
+      />
+    </FormControl>
+  );
 }
 
 export default connectField<SelectFieldProps>(Select, {

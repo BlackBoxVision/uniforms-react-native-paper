@@ -1,7 +1,7 @@
 {
   "name": "@blackbox-vision/uniforms-react-native-paper",
   "version": "0.2.1",
-  "description": "React Native Paper adapter for uniforms library",
+  "description": "💅 React Native Paper components for uniforms.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",

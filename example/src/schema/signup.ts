@@ -10,6 +10,7 @@ const ajv = new Ajv({
 ajv.addKeyword('uniforms');
 ajv.addKeyword('allowedValues');
 ajv.addKeyword('checkboxes');
+ajv.addKeyword('fieldType');
 
 const schema = {
   title: 'Guest',
@@ -42,17 +43,18 @@ const schema = {
         type: 'password',
       },
     },
+    number: {
+      type: 'string',
+      checkboxes: false,
+      fieldType: Array,
+      allowedValues: ['1', '2', '3', '4', '1', '2', '3', '4'],
+    },
     acceptTermsOfUse: {
       type: 'boolean',
       const: true,
     },
     age: {
       type: 'number',
-    },
-    number: {
-      type: 'string',
-      checkboxes: true,
-      allowedValues: ['1', '2', '3', '4'],
     },
   },
   required: [

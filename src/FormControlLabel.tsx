@@ -29,7 +29,7 @@ function FormControlLabel({
     <View style={styles.container}>
       {control}
       <Text style={labelStyle}>
-        {`${!!transform ? transform(label) : label}${required ? ' *' : ''}`}
+        {`${!!transform ? transform(label) : label}`}
       </Text>
     </View>
   );

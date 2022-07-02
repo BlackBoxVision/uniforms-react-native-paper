@@ -7,13 +7,13 @@ import DateField from './DateField';
 import TextField from './TextField';
 import NestField from './NestField';
 import RadioField from './RadioField';
+import SelectField from './SelectField';
 
 const AutoField = createAutoField((props) => {
   if (props.allowedValues) {
-    return RadioField;
-    // return props.checkboxes && props.fieldType !== Array
-    //   ? RadioField
-    //   : SelectField;
+    return props.checkboxes && props.fieldType !== Array
+      ? RadioField
+      : SelectField;
   }
 
   switch (props.fieldType) {

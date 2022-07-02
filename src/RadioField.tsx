@@ -17,7 +17,7 @@ export type RadioFieldProps = FieldProps<
 function Radio({
   error,
   label,
-  value,
+  value = '',
   readOnly,
   disabled,
   transform,
@@ -37,8 +37,10 @@ function Radio({
       helperText={(error && showInlineError && errorMessage) || helperText}
     >
       <RadioButton.Group
-        onValueChange={(value) => disabled || readOnly || onChange(value)}
-        value={value ?? ''}
+        value={value}
+        onValueChange={(value) => {
+          disabled || readOnly || onChange?.(value);
+        }}
       >
         {allowedValues?.map?.((allowedValue: any, idx: number) => (
           <FormControlLabel
