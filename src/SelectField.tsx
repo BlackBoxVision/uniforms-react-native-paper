@@ -122,15 +122,13 @@ function Select(props: SelectFieldProps) {
     );
   }
 
-  console.info('value ', value);
-
   return (
     <FormControl
       error={showInlineError && error}
       helperText={(error && showInlineError && errorMessage) || helperText}
     >
       <SelectDropdown
-        value={value}
+        value={value ?? ''}
         label={legend || label}
         visible={isVisible}
         multiSelect={multiple}
@@ -144,11 +142,7 @@ function Select(props: SelectFieldProps) {
           value: allowedValue,
         }))}
         setValue={(allowedValue: any) => {
-          disabled ||
-            readOnly ||
-            onChange?.(
-              !!multiple ? xor?.([allowedValue], value) : allowedValue
-            );
+          disabled || readOnly || onChange?.(allowedValue);
         }}
         dropDownItemStyle={{
           height: 40,

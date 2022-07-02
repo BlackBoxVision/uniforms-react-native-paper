@@ -11,6 +11,7 @@ ajv.addKeyword('uniforms');
 ajv.addKeyword('allowedValues');
 ajv.addKeyword('checkboxes');
 ajv.addKeyword('fieldType');
+ajv.addKeyword('multiple');
 
 const schema = {
   title: 'Guest',
@@ -46,6 +47,7 @@ const schema = {
     number: {
       type: 'string',
       checkboxes: false,
+      multiple: true,
       fieldType: Array,
       allowedValues: ['1', '2', '3', '4', '1', '2', '3', '4'],
     },
