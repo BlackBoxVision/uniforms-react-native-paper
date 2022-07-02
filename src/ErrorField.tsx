@@ -1,26 +1,15 @@
 import React from 'react';
-import { Override, connectField, filterDOMProps } from 'uniforms';
+import { connectField } from 'uniforms';
 
+import FormControl from './FormControl';
+
+// TODO: improve typings for component props
 export type ErrorFieldProps = any;
 
-function Error(props: ErrorFieldProps) {
-  // const theme = useTheme();
-  // const themeProps = theme.props?.MuiFormControl;
-
-  // return !error ? null : (
-  //   <FormControl
-  //     error={!!error}
-  //     fullWidth={fullWidth ?? themeProps?.fullWidth ?? true}
-  //     margin={margin ?? themeProps?.margin ?? 'dense'}
-  //     variant={variant ?? themeProps?.variant}
-  //   >
-  //     <FormHelperText {...filterDOMProps(props)}>
-  //       {children || errorMessage}
-  //     </FormHelperText>
-  //   </FormControl>
-  // );
-
-  return null;
+function Error({ children, error, errorMessage, ...props }: ErrorFieldProps) {
+  return !error ? null : (
+    <FormControl {...props} helperText={children || errorMessage} error />
+  );
 }
 
 export default connectField<ErrorFieldProps>(Error, {

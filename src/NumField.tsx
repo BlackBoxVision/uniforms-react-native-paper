@@ -1,65 +1,47 @@
 import React from 'react';
-import { View } from 'react-native';
 import { FieldProps, connectField } from 'uniforms';
-import { TextInput, HelperText } from 'react-native-paper';
+import { TextInput as RNTexInput } from 'react-native-paper';
 
+import TextInput from './TextInput';
+import FormControl from './FormControl';
+
+// TODO: improve typings for component props
 export type NumFieldProps = FieldProps<
   string,
-  React.ComponentProps<typeof TextInput>,
+  React.ComponentProps<typeof RNTexInput>,
   {
+    label?: string;
     decimal?: boolean;
     helperText?: string;
     inputRef?: any;
   }
 >;
 
-function Num({
-  decimal = true,
-  disabled,
-  error,
-  errorMessage,
-  helperText,
-  inputRef,
-  label,
-  name,
-  onChange,
-  placeholder,
-  readOnly,
-  showInlineError,
-  value = '',
-  ...props
-}: NumFieldProps) {
-  let formHelperText = (error && showInlineError && errorMessage) || helperText;
-
-  let helperProps: any = {
-    type: showInlineError && error ? 'error' : 'info',
-  };
+function Num(props: NumFieldProps) {
+  let {
+    showInlineError,
+    errorMessage,
+    helperText,
+    onChange,
+    decimal,
+    value,
+    error,
+  } = props;
 
   return (
-    <View
-      style={{
-        flex: 1,
-        marginBottom: 8,
-      }}
+    <FormControl
+      error={showInlineError && error}
+      helperText={(error && showInlineError && errorMessage) || helperText}
     >
       <TextInput
+        {...props}
         keyboardType="numeric"
-        disabled={disabled || readOnly}
-        error={!!error}
-        label={`${label as any}${(props as any).required ? ' *' : ''}`}
-        dense={true}
-        onChangeText={(text: string) =>
-          disabled || onChange(parseFloat(text) as any)
-        }
-        placeholder={placeholder}
-        ref={inputRef}
         value={!!value ? `${value}` : undefined}
-        {...(props as any)}
+        onChange={(text: string) => {
+          onChange?.((decimal ? parseInt(text) : parseFloat(text)) as any);
+        }}
       />
-      {!!formHelperText && (
-        <HelperText {...helperProps}>{formHelperText}</HelperText>
-      )}
-    </View>
+    </FormControl>
   );
 }
 

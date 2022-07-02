@@ -1,9 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import { FieldProps, connectField } from 'uniforms';
-import { RadioButton, Text, useTheme } from 'react-native-paper';
 
-export type RadioFieldProps = FieldProps<any, any>;
+import FormControl from './FormControl';
+import FormControlLabel from './FormControlLabel';
+
+// TODO: improve typings for component props
+export type RadioFieldProps = FieldProps<
+  any,
+  any,
+  {
+    label?: string;
+  }
+>;
 
 function Radio({
   error,
@@ -14,46 +23,33 @@ function Radio({
   transform,
   allowedValues,
   onChange,
+  helperText,
+  errorMessage,
+  showInlineError,
+  required,
   ...props
 }: RadioFieldProps) {
-  let theme = useTheme();
-
   return (
-    <View
-      style={{
-        flex: 1,
-        marginBottom: 8,
-      }}
+    <FormControl
+      label={label}
+      required={required}
+      error={showInlineError && error}
+      helperText={(error && showInlineError && errorMessage) || helperText}
     >
-      <Text
-        style={{
-          marginBottom: 8,
-          color: !!error ? theme.colors.error : theme.colors.text,
-        }}
-      >
-        {`${label as any}${(props as any).required ? ' *' : ''}`}
-      </Text>
       <RadioButton.Group
         onValueChange={(value) => disabled || readOnly || onChange(value)}
         value={value ?? ''}
       >
-        {allowedValues?.map((item: any, idx: number) => (
-          <View
-            key={`${item}-${idx}`}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <RadioButton value={item} />
-            <Text>{transform ? transform(item) : item}</Text>
-          </View>
+        {allowedValues?.map?.((allowedValue: any, idx: number) => (
+          <FormControlLabel
+            {...props}
+            key={idx}
+            label={allowedValue}
+            control={<RadioButton value={allowedValue} />}
+          />
         ))}
       </RadioButton.Group>
-    </View>
+    </FormControl>
   );
 }
 

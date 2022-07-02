@@ -1,6 +1,5 @@
 import invariant from 'invariant';
 import { createAutoField } from 'uniforms';
-export { AutoFieldProps } from 'uniforms';
 
 import NumField from './NumField';
 import BoolField from './BoolField';
@@ -35,5 +34,7 @@ const AutoField = createAutoField((props) => {
 
   return invariant(false, 'Unsupported field type: %s', props.fieldType);
 });
+
+export { AutoFieldProps } from 'uniforms';
 
 export default AutoField;

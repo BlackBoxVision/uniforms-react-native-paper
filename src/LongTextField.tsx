@@ -1,57 +1,34 @@
 import React from 'react';
-import { View } from 'react-native';
 import { FieldProps, connectField } from 'uniforms';
-import { TextInput, HelperText } from 'react-native-paper';
+import { TextInput as RNTextInput } from 'react-native-paper';
 
+import TextInput from './TextInput';
+import FormControl from './FormControl';
+
+// TODO: improve typings for component props
 export type LongTextFieldProps = FieldProps<
   string,
-  React.ComponentProps<typeof TextInput>,
+  React.ComponentProps<typeof RNTextInput>,
   {
+    label?: string;
     helperText?: string;
     inputRef?: any;
   }
 >;
 
-const LongText = ({
-  disabled,
-  error,
-  errorMessage,
-  helperText,
-  inputRef,
-  label,
-  name,
-  onChange,
-  placeholder,
-  readOnly,
-  showInlineError,
-  value = '',
-  ...props
-}: LongTextFieldProps) => {
-  let formHelperText = (error && showInlineError && errorMessage) || helperText;
-
-  let helperProps: any = {
-    type: showInlineError && error ? 'error' : 'info',
-  };
+function LongText(props: LongTextFieldProps) {
+  let { showInlineError, error, errorMessage, helperText } = props;
 
   return (
-    <View>
-      <TextInput
-        disabled={disabled || readOnly}
-        error={!!error}
-        label={`${label as any}${(props as any).required ? ' *' : ''}`}
-        dense={true}
-        multiline={true}
-        onChangeText={(text: string) => disabled || onChange(text)}
-        placeholder={placeholder}
-        ref={inputRef}
-        value={value}
-        {...(props as any)}
-      />
-      {!!formHelperText && (
-        <HelperText {...helperProps}>{formHelperText}</HelperText>
-      )}
-    </View>
+    <FormControl
+      error={showInlineError && error}
+      helperText={(error && showInlineError && errorMessage) || helperText}
+    >
+      <TextInput {...props} numberOfLines={4} multiline />
+    </FormControl>
   );
-};
+}
 
-export default connectField<LongTextFieldProps>(LongText, { kind: 'leaf' });
+export default connectField<LongTextFieldProps>(LongText, {
+  kind: 'leaf',
+});

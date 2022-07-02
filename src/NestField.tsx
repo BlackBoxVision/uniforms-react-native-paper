@@ -2,7 +2,6 @@ import React from 'react';
 import { connectField, FieldProps } from 'uniforms';
 
 import AutoField from './AutoField';
-import wrapField from './wrapField';
 
 // FIXME: wrapField is not typed correctly.
 export type NestFieldProps = FieldProps<any, any>;
