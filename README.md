@@ -38,7 +38,7 @@ $ yarn add @blackbox-vision/uniforms-react-native-paper react-native-paper react
 
 ## Example Usage
 
-TODO
+Check it out [here](https://github.com/BlackBoxVision/uniforms-react-native-paper/tree/main/example). 
 
 ## Issues
 
