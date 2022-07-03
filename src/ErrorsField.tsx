@@ -3,12 +3,10 @@ import { Override, useForm } from 'uniforms';
 
 import FormControl from './FormControl';
 
+import { capitalizeFirstLetter } from './helpers';
+
 // TODO: improve typings for component props
 export type ErrorsFieldProps = Override<any, any>;
-
-function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 function ErrorsField({ children, ...props }: ErrorsFieldProps) {
   let { error, schema } = useForm();

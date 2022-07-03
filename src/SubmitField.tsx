@@ -9,6 +9,7 @@ function SubmitField({
   disabled,
   children,
   label = 'Submit',
+  ...props
 }: SubmitFieldProps) {
   let { error, state, onSubmit } = useForm();
 
@@ -16,6 +17,7 @@ function SubmitField({
     <View style={{ flex: 1, marginTop: 8 }}>
       <Button
         mode="contained"
+        {...props}
         disabled={
           disabled === undefined ? !!(!!error || !!state.disabled) : disabled
         }

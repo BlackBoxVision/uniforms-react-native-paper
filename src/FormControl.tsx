@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { HelperText, Text, useTheme } from 'react-native-paper';
 
+import { capitalizeFirstLetter } from './helpers';
+
 export type FormControlProps = React.PropsWithChildren<{
   label?: string;
   helperText?: string;
@@ -34,7 +36,7 @@ function FormControl({
       {children}
       {!!helperText && (
         <HelperText type={error ? 'error' : 'info'} {...(props as any)}>
-          {helperText}
+          {capitalizeFirstLetter(helperText)}
         </HelperText>
       )}
     </View>

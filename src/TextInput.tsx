@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput as RNTextInput } from 'react-native-paper';
 
 export type TextInputProps = {
@@ -25,8 +25,13 @@ export default function TextInput({
   placeholder,
   value,
   onChange,
+  secureTextEntry,
   ...textInputProps
 }: TextInputProps) {
+  let [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(
+    !secureTextEntry
+  );
+
   return (
     <RNTextInput
       dense
@@ -38,6 +43,15 @@ export default function TextInput({
       onChangeText={(text: string) => {
         disabled || readOnly || onChange?.(text);
       }}
+      secureTextEntry={!isPasswordVisible}
+      right={
+        !!secureTextEntry && (
+          <RNTextInput.Icon
+            name={!isPasswordVisible ? 'eye' : 'eye-off'}
+            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+          />
+        )
+      }
       {...(textInputProps as any)}
     />
   );

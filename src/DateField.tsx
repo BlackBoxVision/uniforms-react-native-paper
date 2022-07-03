@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FieldProps, connectField } from 'uniforms';
 import { TouchableOpacity, View } from 'react-native';
+import { TextInput as RNTextInput } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import TextField from './TextField';
@@ -31,6 +32,12 @@ function DateField(props: DateFieldProps) {
             {...(props as any)}
             onChange={() => {}}
             value={!!value ? new Date(value).toLocaleString() : ''}
+            right={
+              <RNTextInput.Icon
+                name="calendar"
+                onPress={() => setIsVisible(true)}
+              />
+            }
           />
         </View>
       </TouchableOpacity>
