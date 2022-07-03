@@ -4,42 +4,45 @@ import React, {
   cloneElement,
   isValidElement,
 } from 'react';
+import { List as RNList } from 'react-native-paper';
 import { FieldProps, connectField } from 'uniforms';
 
 import ListAddField from './ListAddField';
-import ListItemField from './ListItemField';
 
+// TODO: improve typings for component props
 export type ListFieldProps = FieldProps<any, any>;
 
-function List(props: ListFieldProps) {
-  // return (
-  //   <>
-  //     <ListMaterial
-  //       dense
-  //       subheader={
-  //         label ? (
-  //           <ListSubheader disableSticky>{label}</ListSubheader>
-  //         ) : undefined
-  //       }
-  //       {...filterDOMProps(props)}
-  //     >
-  //       {value?.map((item, itemIndex) =>
-  //         Children.map(children, (child, childIndex) =>
-  //           isValidElement(child)
-  //             ? cloneElement(child, {
-  //                 key: `${itemIndex}-${childIndex}`,
-  //                 name: child.props.name?.replace('$', '' + itemIndex),
-  //                 ...itemProps,
-  //               })
-  //             : child
-  //         )
-  //       )}
-  //     </ListMaterial>
-  //     <ListAddField icon={addIcon} initialCount={initialCount} name="$" />
-  //   </>
-  // );
-
-  return null;
+function List({
+  value,
+  label,
+  addIcon,
+  children,
+  itemProps,
+  initialCount,
+  ...props
+}: ListFieldProps) {
+  return (
+    <>
+      <RNList.Section {...props}>
+        {label ? <RNList.Subheader>{label}</RNList.Subheader> : undefined}
+        {value?.map?.((_: any, itemIndex: number) =>
+          React.Children.map(children, (child: any, childIndex: number) =>
+            isValidElement(child)
+              ? cloneElement(child, {
+                  key: `${itemIndex}-${childIndex}`,
+                  name: (child as any)?.props?.name?.replace(
+                    '$',
+                    '' + itemIndex
+                  ),
+                  ...itemProps,
+                })
+              : child
+          )
+        )}
+      </RNList.Section>
+      <ListAddField name="$" icon={addIcon} initialCount={initialCount} />
+    </>
+  );
 }
 
 export default connectField<ListFieldProps>(List);

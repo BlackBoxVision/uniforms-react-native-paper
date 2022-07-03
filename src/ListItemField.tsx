@@ -1,24 +1,23 @@
 import React from 'react';
 import { connectField } from 'uniforms';
+import { List } from 'react-native-paper';
 
 import AutoField from './AutoField';
 import ListDelField from './ListDelField';
 
 export type ListItemFieldProps = any;
 
-function ListItem(props: ListItemFieldProps) {
-  // return (
-  //   <ListItemMaterial
-  //     dense={dense}
-  //     disableGutters={disableGutters}
-  //     divider={divider}
-  //   >
-  //     {children}
-  //     <ListDelField name="" icon={removeIcon} />
-  //   </ListItemMaterial>
-  // );
-
-  return null;
+function ListItem({
+  children = <AutoField label={null} name="" />,
+  ...props
+}: ListItemFieldProps) {
+  return (
+    <List.Item
+      {...props}
+      description={children}
+      left={(props) => <ListDelField {...props} name="" />}
+    />
+  );
 }
 
 export default connectField<ListItemFieldProps>(ListItem, {
