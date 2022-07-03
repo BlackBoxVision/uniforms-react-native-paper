@@ -1,50 +1,40 @@
-import React, { useState } from 'react';
-import { AutoForm } from '@blackbox-vision/uniforms-react-native-paper';
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import React from 'react';
 import { Provider, DefaultTheme } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { bridge as schema } from './schema/signup';
+import LaunchScreen from './screens/launch';
+import SignUpScreen from './screens/sign-up';
+import SignInScreen from './screens/sign-in';
+import PasswordResetScreen from './screens/password-reset';
+
+let Stack = createNativeStackNavigator();
+
+let appTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#2c387e',
+    accent: '#14a37f',
+  },
+};
 
 export default function App() {
-  let [json, setJson] = useState(null);
-
   return (
-    <Provider theme={DefaultTheme}>
-      <SafeAreaView>
-        <StatusBar />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <Provider theme={appTheme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="launch"
+          screenOptions={{
+            headerShown: false,
+          }}
         >
-          <ScrollView
-            contentContainerStyle={{
-              paddingVertical: 16,
-              paddingHorizontal: 16,
-            }}
-          >
-            <AutoForm
-              schema={schema}
-              onSubmit={(model: any) => {
-                setJson(model);
-              }}
-            />
-            {!!json && (
-              <View
-                style={{ marginTop: 8, flex: 1, backgroundColor: 'lightgrey' }}
-              >
-                <Text>{JSON.stringify(json, null, 2)}</Text>
-              </View>
-            )}
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+          <Stack.Screen name="launch" component={LaunchScreen} />
+          <Stack.Screen name="sign-in" component={SignInScreen} />
+          <Stack.Screen name="sign-up" component={SignUpScreen} />
+          <Stack.Screen name="password-reset" component={PasswordResetScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
