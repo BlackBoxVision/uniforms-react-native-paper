@@ -18,13 +18,7 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
   let theme = useTheme();
 
   return (
-    <SafeAreaView
-      style={[
-        {
-          backgroundColor: theme.colors.background,
-        },
-      ]}
-    >
+    <SafeAreaView>
       <StatusBar />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
